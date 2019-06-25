@@ -2,9 +2,6 @@ package rocks.zipcode.io.quiz3.collections;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import static rocks.zipcode.io.quiz3.collections.LabStatus.PENDING;
 
@@ -14,8 +11,6 @@ import static rocks.zipcode.io.quiz3.collections.LabStatus.PENDING;
 public class Student {
 
     private List<Lab> labs;
-    private String labName;
-    private LabStatus labStatus;
 
     public Student() { this(new ArrayList<>());
     }
@@ -26,7 +21,7 @@ public class Student {
 
     public Lab getLab(String labName) {
         for (Lab lab : labs) {
-            if (lab.equals(labName)) {
+            if (lab.getName().equals(labName)) {
                 return lab;
             }
         } throw new UnsupportedOperationException();
@@ -38,6 +33,7 @@ public class Student {
 
     public void forkLab(Lab lab) {
         lab.setStatus(PENDING);
+        labs.add(lab);
     }
 
     public LabStatus getLabStatus(String labName) {
@@ -48,7 +44,8 @@ public class Student {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(labs).append(" > ").append(labStatus).append("\n");
-            return sb.toString();
-        }
+        for (Lab lab : labs) {
+            sb.append(getLab(lab.getName())).append(" > ").append(lab.getStatus()).append("\n");
+        } return sb.toString();
+    }
 }
