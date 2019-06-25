@@ -5,8 +5,8 @@ package rocks.zipcode.io.quiz3.collections;
  */
 public class Lab {
 
+    private static LabStatus labStatus;
     private  String name;
-    private  LabStatus labStatus;
 
     public Lab() {
         this(null);
@@ -20,7 +20,7 @@ public class Lab {
 
     public void setStatus(LabStatus labStatus) { this.labStatus = labStatus; }
 
-    public LabStatus getStatus() {
+    public static LabStatus getStatus() {
         return labStatus;
     }
 }

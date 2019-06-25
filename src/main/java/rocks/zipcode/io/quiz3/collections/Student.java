@@ -1,51 +1,54 @@
 package rocks.zipcode.io.quiz3.collections;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Stream;
+
+import static rocks.zipcode.io.quiz3.collections.LabStatus.PENDING;
 
 /**
  * @author leon on 10/12/2018.
  */
 public class Student {
 
-    private Map<Lab, LabStatus> statusMap;
+    private List<Lab> labs;
+    private String labName;
+    private LabStatus labStatus;
 
-    public Student() { this((List<Lab>) new TreeMap<Object, Object>()); }
+    public Student() { this(new ArrayList<>());
+    }
 
-    public Student(List<Lab> labs) { this.statusMap = (Map<Lab, LabStatus>) labs; }
+    public Student(List<Lab> labs) {
+        this.labs = labs;
+    }
 
     public Lab getLab(String labName) {
-
-        for (Lab lab : statusMap.keySet()){
-            if (labName.equals(lab.getName())){
+        for (Lab lab : labs) {
+            if (lab.equals(labName)) {
                 return lab;
             }
-        }
-        return null;
+        } throw new UnsupportedOperationException();
     }
 
     public void setLabStatus(String labName, LabStatus labStatus) {
-
-        if(getLab(labName) == null){
-            throw new UnsupportedOperationException("This lab has not been forked!");
-        }
-        statusMap.put(getLab(labName), labStatus);
+        getLab(labName).setStatus(labStatus);
     }
 
     public void forkLab(Lab lab) {
-
-        statusMap.put(lab, LabStatus.PENDING);
+        lab.setStatus(PENDING);
     }
 
     public LabStatus getLabStatus(String labName) {
 
-        return statusMap.get(getLab(labName));
+        return (LabStatus) Lab.getStatus();
     }
 
     @Override
     public String toString() {
-
-        return "Student{" + "statusMap=" + statusMap + '}';
-    }
+        StringBuilder sb = new StringBuilder();
+        sb.append(labs).append(" > ").append(labStatus).append("\n");
+            return sb.toString();
+        }
 }
